@@ -33,7 +33,7 @@ if __name__=='__main__':
     s_sequences = [
         SeqRecord(
             refseq,
-            id='NC_045512',
+            id='NC_045512.2',
             name='S',
             description='surface glycoprotein, refseq'
         )

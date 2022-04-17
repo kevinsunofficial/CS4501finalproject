@@ -1,7 +1,6 @@
 #!/bin/bash
 #SBATCH -t 48:00:00
 #SBATCH --job-name="Spike Analysis Plain"
-#SBATCH --nodelist=artemis2
 #SBATCH -o slurm/spike_analysis_plain.out
 #SBATCH -e slurm/spike_analysis_plain.error
 #SBATCH --partition=gpu
