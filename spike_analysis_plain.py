@@ -22,7 +22,7 @@ if __name__=='__main__':
     df.head()
 
     refseq = sequences['NC_045512.2']
-    accession_list = df.Accession.tolist()[:3]
+    accession_list = df.Accession.tolist()
     accession_list.remove('NC_045512.2')
 
     s_sequences = [
