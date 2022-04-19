@@ -31,18 +31,18 @@ if __name__=='__main__':
         )
     ]
 
-    for seq_id in tqdm(df.Accession.tolist(), desc='aligning'):
-        seq2 = sequences[seq_id]
-        alignment = pairwise2.align.globalms(refseq,seq2,2,-1,-10,-0.5,one_alignment_only=True,penalize_end_gaps=False)
-        seqB = alignment[0].seqB
+    # for seq_id in tqdm(df.Accession.tolist(), desc='aligning'):
+    #     seq2 = sequences[seq_id]
+    #     alignment = pairwise2.align.globalms(refseq,seq2,2,-1,-10,-0.5,one_alignment_only=True,penalize_end_gaps=False)
+    #     seqB = alignment[0].seqB
         
-        s_sequences.append(
-            SeqRecord(
-                seqB,
-                id=seq_id,
-                name='S',
-                description='surface glycoprotein'
-            )
-        )
+    #     s_sequences.append(
+    #         SeqRecord(
+    #             seqB,
+    #             id=seq_id,
+    #             name='S',
+    #             description='surface glycoprotein'
+    #         )
+    #     )
 
     SeqIO.write(s_sequences, 'sars_cov2_s_aligned_genomic.fasta', 'fasta')
