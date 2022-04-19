@@ -4,6 +4,7 @@ import pandas as pd
 
 from Bio import SeqIO
 from Bio import pairwise2
+from Bio.Seq import Seq
 from Bio.pairwise2 import format_alignment
 from Bio.SeqRecord import SeqRecord
 from tqdm import tqdm
@@ -46,14 +47,14 @@ if __name__=='__main__':
         )
     ]
 
-    workers = multiprocessing.Pool(5)
+    workers = multiprocessing.Pool(8)
     results = workers.map_async(aligning, align_seq).get()
 
     for seq_info in tqdm(results, desc='parsing result'):
         seq_id, seqB = seq_info
         s_sequences.append(
             SeqRecord(
-                seqB,
+                Seq(seqB),
                 id=seq_id,
                 name='S',
                 description='surface glycoprotein'

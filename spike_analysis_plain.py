@@ -4,6 +4,7 @@ import pandas as pd
 
 from Bio import SeqIO
 from Bio import pairwise2
+from Bio.Seq import Seq
 from Bio.pairwise2 import format_alignment
 from Bio.SeqRecord import SeqRecord
 from tqdm import tqdm
@@ -21,7 +22,7 @@ if __name__=='__main__':
     df.head()
 
     refseq = sequences['NC_045512.2']
-    accession_list = df.Accession.tolist()
+    accession_list = df.Accession.tolist()[:3]
     accession_list.remove('NC_045512.2')
 
     s_sequences = [
@@ -44,7 +45,7 @@ if __name__=='__main__':
         
         s_sequences.append(
             SeqRecord(
-                seqB,
+                Seq(seqB),
                 id=seq_id,
                 name='S',
                 description='surface glycoprotein'
