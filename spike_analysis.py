@@ -47,7 +47,7 @@ if __name__=='__main__':
         )
     ]
 
-    workers = multiprocessing.Pool(8)
+    workers = multiprocessing.Pool(5)
     results = workers.map_async(aligning, align_seq).get()
 
     for seq_info in tqdm(results, desc='parsing result'):
