@@ -12,8 +12,13 @@ import multiprocessing
 
 def aligning(seq_info):
     seq_id, seq2 = seq_info
-    alignment = pairwise2.align.globalms(refseq,seq2,2,-1,-10,-0.5,one_alignment_only=True,penalize_end_gaps=False)
-    return (seq_id, alignment[0].seqB)
+    alignment1 = pairwise2.align.globalms(refseq[:1000],seq2[:1000],2,-1,-10,-0.5,one_alignment_only=True,penalize_end_gaps=False)
+    alignment2 = pairwise2.align.globalms(refseq[1000:2000],seq2[1000:2000],2,-1,-10,-0.5,one_alignment_only=True,penalize_end_gaps=False)
+    alignment3 = pairwise2.align.globalms(refseq[2000:3000],seq2[2000:3000],2,-1,-10,-0.5,one_alignment_only=True,penalize_end_gaps=False)
+    alignment4 = pairwise2.align.globalms(refseq[3000:],seq2[3000:],2,-1,-10,-0.5,one_alignment_only=True,penalize_end_gaps=False)
+
+    seqB = alignment1[0].seqB+alignment2[0].seqB+alignment3[0].seqB+alignment4[0].seqB
+    return (seq_id, seqB)
     # return seq_id, seq2
 
 if __name__=='__main__':
@@ -28,7 +33,9 @@ if __name__=='__main__':
     df.head()
 
     refseq = sequences['NC_045512.2']
-    align_seq = [(seq_id,sequences[seq_id]) for seq_id in tqdm(df.Accession.tolist(), desc='prepare alignemnt')]
+    accession_list = df.Accession.tolist()
+    accession_list.remove('NC_045512.2')
+    align_seq = [(seq_id,sequences[seq_id]) for seq_id in tqdm(accession_list, desc='prepare alignemnt')]
 
     s_sequences = [
         SeqRecord(
