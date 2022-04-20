@@ -13,6 +13,7 @@ import multiprocessing
 
 def aligning(seq_info):
     seq_id, seq2 = seq_info
+    print(seq_id)
     alignment = pairwise2.align.localms(refseq,seq2,2,-1,-10,-0.5,one_alignment_only=True,penalize_end_gaps=False)
     seqB = alignment[0].seqB
     return (seq_id, seqB)
