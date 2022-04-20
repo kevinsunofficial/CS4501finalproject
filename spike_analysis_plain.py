@@ -11,13 +11,13 @@ from tqdm import tqdm
 
 
 if __name__=='__main__':
-    fastafn = 'sars_cov2_s_genomic.fasta'
+    fastafn = 'sars_cov2_spike.fasta'
     sequences = {}
     for seq_record in tqdm(SeqIO.parse(fastafn,'fasta'), desc='loading fasta file'):
         sequences[seq_record.id] = seq_record.seq
     print('loaded', len(sequences), 'sequences')
 
-    csvfn = 'sars_cov2_s_report.csv'
+    csvfn = 'sars_cov2_spike.csv'
     df = pd.read_csv(csvfn)
     df.head()
 
@@ -36,7 +36,7 @@ if __name__=='__main__':
 
     for seq_id in tqdm(accession_list, desc='aligning'):
         seq2 = sequences[seq_id]
-        alignment = pairwise2.align.localms(refseq,seq2,2,-1,-10,-0.5,one_alignment_only=True,penalize_end_gaps=False)
+        alignment = pairwise2.align.globalms(refseq,seq2,2,-1,-10,-0.5,one_alignment_only=True,penalize_end_gaps=False)
         seqB = alignment[0].seqB
         
         s_sequences.append(
