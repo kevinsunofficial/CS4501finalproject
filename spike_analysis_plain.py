@@ -36,12 +36,8 @@ if __name__=='__main__':
 
     for seq_id in tqdm(accession_list, desc='aligning'):
         seq2 = sequences[seq_id]
-        alignment1 = pairwise2.align.globalms(refseq[:1000],seq2[:1000],2,-1,-10,-0.5,one_alignment_only=True,penalize_end_gaps=False)
-        alignment2 = pairwise2.align.globalms(refseq[1000:2000],seq2[1000:2000],2,-1,-10,-0.5,one_alignment_only=True,penalize_end_gaps=False)
-        alignment3 = pairwise2.align.globalms(refseq[2000:3000],seq2[2000:3000],2,-1,-10,-0.5,one_alignment_only=True,penalize_end_gaps=False)
-        alignment4 = pairwise2.align.globalms(refseq[3000:],seq2[3000:],2,-1,-10,-0.5,one_alignment_only=True,penalize_end_gaps=False)
-
-        seqB = alignment1[0].seqB+alignment2[0].seqB+alignment3[0].seqB+alignment4[0].seqB
+        alignment = pairwise2.align.localms(refseq,seq2,2,-1,-10,-0.5,one_alignment_only=True,penalize_end_gaps=False)
+        seqB = alignment[0].seqB
         
         s_sequences.append(
             SeqRecord(

@@ -13,14 +13,9 @@ import multiprocessing
 
 def aligning(seq_info):
     seq_id, seq2 = seq_info
-    alignment1 = pairwise2.align.globalms(refseq[:1000],seq2[:1000],2,-1,-10,-0.5,one_alignment_only=True,penalize_end_gaps=False)
-    alignment2 = pairwise2.align.globalms(refseq[1000:2000],seq2[1000:2000],2,-1,-10,-0.5,one_alignment_only=True,penalize_end_gaps=False)
-    alignment3 = pairwise2.align.globalms(refseq[2000:3000],seq2[2000:3000],2,-1,-10,-0.5,one_alignment_only=True,penalize_end_gaps=False)
-    alignment4 = pairwise2.align.globalms(refseq[3000:],seq2[3000:],2,-1,-10,-0.5,one_alignment_only=True,penalize_end_gaps=False)
-
-    seqB = alignment1[0].seqB+alignment2[0].seqB+alignment3[0].seqB+alignment4[0].seqB
+    alignment = pairwise2.align.localms(refseq,seq2,2,-1,-10,-0.5,one_alignment_only=True,penalize_end_gaps=False)
+    seqB = alignment[0].seqB
     return (seq_id, seqB)
-    # return seq_id, seq2
 
 if __name__=='__main__':
     fastafn = 'sars_cov2_s_genomic.fasta'
@@ -47,7 +42,7 @@ if __name__=='__main__':
         )
     ]
 
-    workers = multiprocessing.Pool(5)
+    workers = multiprocessing.Pool(8)
     results = workers.map_async(aligning, align_seq).get()
 
     for seq_info in tqdm(results, desc='parsing result'):
@@ -61,4 +56,4 @@ if __name__=='__main__':
             )
         )
 
-    SeqIO.write(s_sequences, 'sars_cov2_s_aligned_genomic.fasta', 'fasta')
+    SeqIO.write(s_sequences, 'sars_cov2_s_aligned_genomic_parallel.fasta', 'fasta')
