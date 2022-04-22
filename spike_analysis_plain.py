@@ -48,4 +48,4 @@ if __name__=='__main__':
             )
         )
 
-    SeqIO.write(s_sequences, 'sars_cov2_s_aligned_genomic.fasta', 'fasta')
+    SeqIO.write(s_sequences, 'sars_cov2_spike_aligned.fasta', 'fasta')
